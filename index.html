@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#172338">
+  <meta name="description" content="AgliClassKyaHai - DDU AIDS class timetable and class tracker.">
+  <title>AgliClassKyaHai | Premium Edition</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #172338;
+      --navy2: #24344b;
+      --gold: #c5a46d;
+      --gold-light: #f4ead7;
+      --ivory: #f8f7f2;
+      --white: #ffffff;
+      --text: #29374b;
+      --muted: #7b8797;
+      --border: #e7e4dc;
+      --green: #38765c;
+      --green-bg: #eaf3ed;
+      --amber: #916a31;
+      --amber-bg: #faf1df;
+      --blue-bg: #edf2f8;
+      --shadow: 0 10px 30px rgba(23,35,56,.055);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--ivory);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 22px 14px;
+    }
+
+    button { font: inherit; }
+
+    .container { max-width: 940px; margin: auto; }
+
+    /* HEADER */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: var(--navy);
+      color: white;
+      padding: 38px 25px 32px;
+      border-radius: 20px;
+      border-bottom: 3px solid var(--gold);
+      box-shadow: 0 14px 35px rgba(23,35,56,.13);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border: 1px solid rgba(197,164,109,.16);
+      border-radius: 50%;
+      right: -90px;
+      top: -130px;
+      box-shadow: 0 0 0 25px rgba(197,164,109,.025),
+                  0 0 0 50px rgba(197,164,109,.025);
+      pointer-events: none;
+    }
+
+    .hero-inner { position: relative; z-index: 1; }
+
+    .brand-line {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 12px;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 31px;
+      height: 31px;
+      border: 1px solid var(--gold);
+      border-radius: 9px;
+      color: var(--gold);
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .brand-name {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(26px, 5.5vw, 40px);
+      font-weight: 800;
+      letter-spacing: -1.4px;
+      overflow-wrap: anywhere;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      text-align: center;
+      color: #d5dbe4;
+      font-size: 13px;
+    }
+
+    .hero-tag {
+      width: fit-content;
+      margin: 17px auto 0;
+      padding: 6px 12px;
+      border: 1px solid #4b5a70;
+      border-radius: 30px;
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 17px 2px 20px;
+      flex-wrap: wrap;
+    }
+
+    .date-text { color: var(--muted); font-size: 12px; font-weight: 600; }
+
+    .live-clock {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 4px var(--green-bg);
+    }
+
+    /* GENERAL CARDS */
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 24px;
+      margin-bottom: 17px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-eyebrow {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .section-title {
+      color: var(--navy);
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -.5px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 19px;
+    }
+
+    .mini-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .mini-label.free { background: var(--amber-bg); color: var(--amber); }
+    .mini-label.off { background: var(--blue-bg); color: var(--navy2); }
+
+    /* CURRENT CLASS */
+
+    .current-card {
+      border-top: 3px solid var(--gold);
+      padding-top: 22px;
+    }
+
+    .subject {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(24px, 5vw, 33px);
+      line-height: 1.25;
+      font-weight: 800;
+      letter-spacing: -.8px;
+      color: var(--navy);
+      margin: 12px 0 9px;
+      overflow-wrap: anywhere;
+    }
+
+    .details { color: var(--muted); font-size: 13px; line-height: 1.9; }
+
+    .teacher-message {
+      margin-top: 17px;
+      background: var(--gold-light);
+      color: #705a38;
+      border-left: 3px solid var(--gold);
+      border-radius: 5px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .next-card { background: #f0f3f6; }
+
+    .next-card .teacher-message {
+      background: white;
+      color: var(--text);
+      border-left-color: var(--navy2);
+    }
+
+    .countdown {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .time-unit {
+      min-width: 61px;
+      text-align: center;
+      padding: 9px 10px;
+      background: white;
+      border: 1px solid #dfe3e9;
+      border-radius: 9px;
+    }
+
+    .time-unit strong {
+      display: block;
+      font-family: 'Manrope', sans-serif;
+      font-size: 20px;
+      color: var(--navy);
+      line-height: 1.3;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .time-unit span {
+      display: block;
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+
+    /* WEEK SELECTOR */
+
+    .day-picker {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      margin: 18px 0 20px;
+    }
+
+    .day-btn {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      border-radius: 9px;
+      padding: 10px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .day-btn:hover { border-color: var(--gold); }
+
+    .day-btn.selected {
+      color: white;
+      background: var(--navy);
+      border-color: var(--navy);
+      box-shadow: 0 4px 10px #17233818;
+    }
+
+    .day-btn.today:not(.selected) { border-color: var(--gold); }
+
+    .schedule-caption {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .schedule-caption h3 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      color: var(--navy);
+    }
+
+    .today-badge {
+      color: var(--amber);
+      background: var(--amber-bg);
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .timetable {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+    }
+
+    .period {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: #fff;
+      transition: .2s;
+      min-width: 0;
+    }
+
+    .period:hover { border-color: var(--gold); }
+
+    .period.active {
+      background: #fbf7ef;
+      border-color: var(--gold);
+      box-shadow: inset 3px 0 var(--gold);
+    }
+
+    .period-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+
+    .period-code {
+      color: var(--amber);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      overflow-wrap: anywhere;
+    }
+
+    .now-badge {
+      font-size: 9px;
+      color: var(--green);
+      background: var(--green-bg);
+      border-radius: 4px;
+      padding: 3px 6px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .period h4 {
+      font-family: 'Manrope', sans-serif;
+      color: var(--navy);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 5px;
+      overflow-wrap: anywhere;
+    }
+
+    .period-time { color: var(--text); font-size: 12px; font-weight: 600; }
+    .period-teacher { color: var(--muted); font-size: 11px; margin-top: 3px; }
+    .period-note { border-top: 1px solid var(--border); margin-top: 11px; padding-top: 9px; color: #705a38; font-size: 11px; line-height: 1.65; }
+
+    .empty-state {
+      text-align: center;
+      border: 1px dashed #d9d6cd;
+      border-radius: 11px;
+      padding: 26px 15px;
+      color: var(--muted);
+      font-size: 13px;
+      grid-column: 1 / -1;
+    }
+
+    .empty-icon { font-size: 25px; margin-bottom: 6px; }
+
+    /* FOOTER */
+
+    footer {
+      text-align: center;
+      padding: 18px 8px 10px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 2;
+    }
+
+    footer strong {
+      font-family: 'Manrope', sans-serif;
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .footer-line {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 12px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 12px 10px; }
+      .hero { padding: 29px 13px 25px; border-radius: 15px; }
+      .brand-name { letter-spacing: -1px; }
+      .topbar { margin: 14px 2px 16px; }
+      .card { padding: 18px; border-radius: 13px; margin-bottom: 13px; }
+      .current-card { padding-top: 19px; }
+      .section-title { font-size: 18px; }
+      .day-picker { gap: 5px; }
+      .day-btn { font-size: 11px; padding: 9px 2px; }
+      .timetable { grid-template-columns: 1fr; }
+      .period { padding: 14px; }
+      .time-unit { min-width: 54px; }
+      .time-unit strong { font-size: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main class="container">
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="brand-line">
+        <div class="brand-mark">A</div>
+        <h1 class="brand-name">AgliClassKyaHai</h1>
+      </div>
+      <p class="hero-subtitle">DDU Gorakhpur University</p>
+      <p class="hero-subtitle">B.Tech · Artificial Intelligence & Data Science</p>
+      <div class="hero-tag">YOUR CLASS COMPANION</div>
+    </div>
+  </header>
+
+  <div class="topbar">
+    <div class="date-text" id="dateText">Loading date...</div>
+    <div class="live-clock">
+      <span class="live-dot"></span>
+      <span id="clock">--:--:--</span>
+    </div>
+  </div>
+
+  <!-- CURRENT CLASS -->
+  <section class="card current-card">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Right now</div>
+        <h2 class="section-title">Abhi kya chal raha hai?</h2>
+      </div>
+      <span class="mini-label" id="statusTag">CHECKING</span>
+    </div>
+
+    <div class="subject" id="currentSubject">Loading...</div>
+    <div class="details" id="currentDetails"></div>
+    <div class="teacher-message" id="currentMessage"></div>
+  </section>
+
+  <!-- NEXT CLASS -->
+  <section class="card next-card">
+    <div class="section-eyebrow">Up next</div>
+    <h2 class="section-title">Agli class</h2>
+    <div class="subject" id="nextSubject">Checking...</div>
+    <div class="details" id="nextDetails"></div>
+
+    <div class="countdown" id="countdown">
+      <div class="time-unit"><strong>--</strong><span>Hours</span></div>
+      <div class="time-unit"><strong>--</strong><span>Minutes</span></div>
+      <div class="time-unit"><strong>--</strong><span>Seconds</span></div>
+    </div>
+
+    <div class="teacher-message" id="nextMessage"></div>
+  </section>
+
+  <!-- WEEKLY TIMETABLE -->
+  <section class="card">
+    <div class="section-eyebrow">Plan your day</div>
+    <h2 class="section-title">Weekly Timetable</h2>
+    <p class="details">Kisi bhi din ko select karke class schedule dekho.</p>
+
+    <div class="day-picker" id="dayPicker"></div>
+
+    <div class="schedule-caption">
+      <h3 id="selectedDayTitle">Today's Schedule</h3>
+      <span class="today-badge" id="todayBadge" hidden>TODAY</span>
+    </div>
+
+    <div class="timetable" id="timetable"></div>
+  </section>
+
+  <footer>
+    <div class="footer-line"></div>
+    <strong>AgliClassKyaHai</strong><br>
+    Made with care for DDU AIDS students<br>
+    <span>Study smart. Reach on time.</span>
+  </footer>
+
+</main>
+
+<script>
+  /*
+    AGliCLASSKYAHAl V3.0
+    Timetable below is based on the previously transcribed AIDS schedule.
+    Verify all slots against the original official timetable before publishing.
+    Times use the visitor's device local time.
+  */
+
+  const dayNames = [
+    "Sunday", "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday"
+  ];
+
+  const weekDays = [
+    "Monday", "Tuesday", "Wednesday",
+    "Thursday", "Friday", "Saturday"
+  ];
+
+  /*
+    Each item uses 24-hour time.
+    If a slot changes, edit start/end here.
+  */
+
+  const schedule = {
+    Monday: [
+      { start:"10:00", end:"12:00", code:"ECE151 P1", name:"ECE Practical", teacher:"SD + NMT" },
+      { start:"12:00", end:"13:00", code:"AID101", name:"AID101", teacher:"AK" },
+      { start:"13:00", end:"14:00", code:"EMAT103", name:"Engineering Mathematics", teacher:"PK" },
+      { start:"14:00", end:"15:00", code:"ECE101", name:"ECE101", teacher:"SD" }
+    ],
+
+    Tuesday: [
+      { start:"10:00", end:"12:00", code:"ECE151 P2", name:"ECE Practical", teacher:"SD + NMT" },
+      { start:"12:00", end:"13:00", code:"AID101", name:"AID101", teacher:"AK" },
+      { start:"13:00", end:"14:00", code:"EMAT103", name:"Engineering Mathematics", teacher:"PK" },
+      { start:"14:00", end:"15:00", code:"ECE101", name:"ECE101", teacher:"SD" },
+      { start:"15:00", end:"16:00", code:"AID151 P1", name:"AID151 Practical", teacher:"AK" }
+    ],
+
+    Wednesday: [
+      { start:"12:00", end:"13:00", code:"AID102", name:"AID102", teacher:"AC" },
+      { start:"13:00", end:"14:00", code:"EMAT103", name:"Engineering Mathematics", teacher:"PK" },
+      { start:"14:00", end:"15:00", code:"ECE101", name:"ECE101", teacher:"SD" },
+      { start:"15:00", end:"16:00", code:"AID151 P2", name:"AID151 Practical", teacher:"AK" }
+    ],
+
+    Thursday: [
+      { start:"10:00", end:"11:00", code:"ECHE101", name:"Engineering Chemistry", teacher:"VD" },
+      { start:"12:00", end:"13:00", code:"AID101", name:"AID101", teacher:"AK" }
+    ],
+
+    Friday: [
+      { start:"10:00", end:"11:00", code:"ECHE101", name:"Engineering Chemistry", teacher:"VD" },
+      { start:"12:00", end:"13:00", code:"AID102", name:"AID102", teacher:"AC" },
+      { start:"13:00", end:"15:00", code:"AID152 P1", name:"AID152 Practical", teacher:"AC" }
+    ],
+
+    Saturday: [
+      { start:"10:00", end:"11:00", code:"ECHE101", name:"Engineering Chemistry", teacher:"VD" },
+      { start:"12:00", end:"13:00", code:"AID102", name:"AID102", teacher:"AC" },
+      { start:"13:00", end:"15:00", code:"AID152 P2", name:"AID152 Practical", teacher:"AC" }
+    ]
+  };
+
+  /*
+    Teacher messages are editable.
+    Arrival remarks are general reminders, not live tracking.
+  */
+
+  const messages = {
+    "AID101": "Sir aam taur par 5–10 minute late aate hain. Phir bhi time par pahunchna!",
+    "AID102": "Sir aksar time se pehle aa jaate hain, isliye jaldi pahunchna!",
+    "ECE101": "Sir time par aate hain. Class ke liye ready rehna!",
+    "ECE151 P1": "Practical ke liye time par pahunchna!",
+    "ECE151 P2": "Practical ke liye time par pahunchna!",
+    "EMAT103": "Sir kabhi-kabhi thoda late aate hain. Schedule follow karna!",
+    "ECHE101": "Class bilkul 10 baje hai. Time par pahunchna!",
+    "AID151 P1": "Practical ke liye time par pahunchna!",
+    "AID151 P2": "Practical ke liye time par pahunchna!",
+    "AID152 P1": "Practical ke liye time par pahunchna!",
+    "AID152 P2": "Practical ke liye time par pahunchna!"
+  };
+
+  let selectedDay = dayNames[new Date().getDay()];
+
+  if (!weekDays.includes(selectedDay)) {
+    selectedDay = "Monday";
+  }
+
+  function toMinutes(time) {
+    const [h, m] = time.split(":").map(Number);
+    return h * 60 + m;
+  }
+
+  function formatTime(time) {
+    const [h, m] = time.split(":").map(Number);
+    const suffix = h >= 12 ? "PM" : "AM";
+    return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${suffix}`;
+  }
+
+  function getNowMinutes(now) {
+    return now.getHours() * 60 + now.getMinutes();
+  }
+
+  function getCurrentClass(list, nowMinutes) {
+    return list.find(item =>
+      nowMinutes >= toMinutes(item.start) &&
+      nowMinutes < toMinutes(item.end)
+    );
+  }
+
+  function getNextClass(list, nowMinutes) {
+    return list.find(item => toMinutes(item.start) > nowMinutes);
+  }
+
+  function detailsFor(item) {
+    return `${item.code} · ${formatTime(item.start)} – ${formatTime(item.end)} · Teacher: ${item.teacher}`;
+  }
+
+  function setStatus(type, text) {
+    const tag = document.getElementById("statusTag");
+    tag.className = "mini-label" + (type ? " " + type : "");
+    tag.textContent = text;
+  }
+
+  function updateDateAndClock(now) {
+    document.getElementById("dateText").textContent =
+      now.toLocaleDateString("en-IN", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+
+    document.getElementById("clock").textContent =
+      now.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      });
+  }
+
+  function renderCountdown(next, now) {
+    const box = document.getElementById("countdown");
+    box.replaceChildren();
+
+    if (!next) {
+      const label = document.createElement("div");
+      label.className = "details";
+      label.textContent = "No upcoming class today.";
+      box.appendChild(label);
+      return;
+    }
+
+    const target = new Date(now);
+    const [hours, mins] = next.start.split(":").map(Number);
+    target.setHours(hours, mins, 0, 0);
+
+    const secondsLeft = Math.max(0, Math.floor((target - now) / 1000));
+
+    const values = [
+      { value: Math.floor(secondsLeft / 3600), label: "Hours" },
+      { value: Math.floor((secondsLeft % 3600) / 60), label: "Minutes" },
+      { value: secondsLeft % 60, label: "Seconds" }
+    ];
+
+    values.forEach(unit => {
+      const element = document.createElement("div");
+      element.className = "time-unit";
+
+      const value = document.createElement("strong");
+      value.textContent = String(unit.value).padStart(2, "0");
+
+      const label = document.createElement("span");
+      label.textContent = unit.label;
+
+      element.append(value, label);
+      box.appendChild(element);
+    });
+  }
+
+  function renderLiveStatus(now) {
+    const day = dayNames[now.getDay()];
+    const nowMinutes = getNowMinutes(now);
+    const today = schedule[day] || [];
+
+    const current = getCurrentClass(today, nowMinutes);
+    const next = getNextClass(today, nowMinutes);
+
+    const subject = document.getElementById("currentSubject");
+    const details = document.getElementById("currentDetails");
+    const message = document.getElementById("currentMessage");
+
+    if (day === "Sunday") {
+      setStatus("off", "HOLIDAY");
+      subject.textContent = "Aaj Sunday hai!";
+      details.textContent = "Aaj timetable mein koi scheduled class nahi hai.";
+      message.textContent = "Aaram karo bhai, kal phir college!";
+    } else if (current) {
+      setStatus("", "CLASS IN PROGRESS");
+      subject.textContent = current.name;
+      details.textContent = detailsFor(current);
+      message.textContent = messages[current.code] || "Class ke liye ready raho!";
+    } else if (next) {
+      setStatus("free", "FREE PERIOD");
+      subject.textContent = "Abhi koi class nahi hai!";
+      details.textContent = "Abhi koi scheduled class nahi chal rahi.";
+      message.textContent = "Free time ka maza lo, lekin agli class miss mat karna.";
+    } else {
+      setStatus("off", "SCHEDULE COMPLETE");
+      subject.textContent = "Aaj ki classes khatam!";
+      details.textContent = "Timetable ke hisaab se ab koi aur class nahi hai.";
+      message.textContent = "Aaram karo aur kal ke liye ready raho!";
+    }
+
+    const nextSubject = document.getElementById("nextSubject");
+    const nextDetails = document.getElementById("nextDetails");
+    const nextMessage = document.getElementById("nextMessage");
+
+    if (day === "Sunday") {
+      nextSubject.textContent = "Monday ka timetable";
+      nextDetails.textContent = "Kal ka schedule check kar lena.";
+      nextMessage.textContent = "Enjoy your Sunday!";
+      renderCountdown(null, now);
+    } else if (next) {
+      nextSubject.textContent = next.name;
+      nextDetails.textContent = detailsFor(next);
+      nextMessage.textContent = messages[next.code] || "Class ke liye ready rehna!";
+      renderCountdown(next, now);
+    } else {
+      nextSubject.textContent = "Aaj koi aur class nahi";
+      nextDetails.textContent = "Aaj ki scheduled classes complete hain.";
+      nextMessage.textContent = "Have a great day!";
+      renderCountdown(null, now);
+    }
+  }
+
+  function renderDayPicker(now) {
+    const picker = document.getElementById("dayPicker");
+    picker.replaceChildren();
+
+    weekDays.forEach(day => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "day-btn";
+      button.textContent = day.slice(0, 3);
+      button.title = day;
+      button.setAttribute("aria-label", `Show ${day} timetable`);
+
+      if (day === selectedDay) button.classList.add("selected");
+      if (day === dayNames[now.getDay()]) button.classList.add("today");
+
+      button.addEventListener("click", () => {
+        selectedDay = day;
+        renderDayPicker(new Date());
+        renderSelectedDay(new Date());
+      });
+
+      picker.appendChild(button);
+    });
+  }
+
+  function renderSelectedDay(now) {
+    const list = schedule[selectedDay] || [];
+    const currentDay = dayNames[now.getDay()];
+    const isToday = selectedDay === currentDay;
+    const nowMinutes = getNowMinutes(now);
+
+    document.getElementById("selectedDayTitle").textContent =
+      selectedDay + (isToday ? " · Today's schedule" : " · Weekly schedule");
+
+    document.getElementById("todayBadge").hidden = !isToday;
+
+    const grid = document.getElementById("timetable");
+    grid.replaceChildren();
+
+    if (!list.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty-state";
+
+      const icon = document.createElement("div");
+      icon.className = "empty-icon";
+      icon.textContent = "✦";
+
+      const text = document.createElement("div");
+      text.textContent = "Is din koi scheduled class nahi hai.";
+
+      empty.append(icon, text);
+      grid.appendChild(empty);
+      return;
+    }
+
+    list.forEach(item => {
+      const active = isToday &&
+        nowMinutes >= toMinutes(item.start) &&
+        nowMinutes < toMinutes(item.end);
+
+      const card = document.createElement("article");
+      card.className = "period" + (active ? " active" : "");
+
+      const top = document.createElement("div");
+      top.className = "period-top";
+
+      const code = document.createElement("span");
+      code.className = "period-code";
+      code.textContent = item.code;
+      top.appendChild(code);
+
+      if (active) {
+        const nowBadge = document.createElement("span");
+        nowBadge.className = "now-badge";
+        nowBadge.textContent = "LIVE";
+        top.appendChild(nowBadge);
+      }
+
+      const title = document.createElement("h4");
+      title.textContent = item.name;
+
+      const time = document.createElement("div");
+      time.className = "period-time";
+      time.textContent = `${formatTime(item.start)} – ${formatTime(item.end)}`;
+
+      const teacher = document.createElement("div");
+      teacher.className = "period-teacher";
+      teacher.textContent = `Teacher: ${item.teacher}`;
+
+      const note = document.createElement("div");
+      note.className = "period-note";
+      note.textContent = messages[item.code] || "Class ke liye time par pahunchna.";
+
+      card.append(top, title, time, teacher, note);
+      grid.appendChild(card);
+    });
+  }
+
+  function updateWebsite() {
+    const now = new Date();
+
+    updateDateAndClock(now);
+    renderLiveStatus(now);
+    renderSelectedDay(now);
+  }
+
+  // Start the dashboard.
+  renderDayPicker(new Date());
+  updateWebsite();
+
+  // Refresh clock, countdown and current class status.
+  setInterval(updateWebsite, 1000);
+</script>
+</body>
+</html>
